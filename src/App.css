@@ -1,0 +1,16 @@
+.body {
+  margin-left: 24rem;
+  margin-right: 24rem;
+}
+
+.spend-section {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 24px;
+}
+
+.dashboard-title-container {
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
