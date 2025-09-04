@@ -9,11 +9,16 @@ import { Dispatch, SetStateAction } from "react";
 type ItemProps = {
   item: Item;
   setItems: Dispatch<SetStateAction<Item[]>>;
+  setIsEditItemModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-function ItemCard({ item, setItems }: ItemProps) {
+function ItemCard({ item, setItems, setIsEditItemModalOpen }: ItemProps) {
   const handleDeleteItem = () => {
     setItems((prevItems) => prevItems.filter((i) => i.id != item.id));
+  };
+
+  const handleEditItem = () => {
+    setIsEditItemModalOpen(true);
   };
 
   return (
@@ -36,7 +41,9 @@ function ItemCard({ item, setItems }: ItemProps) {
         </p>
       </div>
       <div className="item-buttons">
-        <button className="edit-button">Edit</button>
+        <button className="edit-button" onClick={handleEditItem}>
+          Edit
+        </button>
         <button className="delete-button" onClick={handleDeleteItem}>
           Delete
         </button>

@@ -7,9 +7,11 @@ import SpendBreakdownCard from "./components/SpendBreakdownCard/SpendBreakdownCa
 import ItemsSection from "./components/Item/ItemsSection";
 import AddItemModal from "./components/AddItemModal/AddItemModal";
 import { useState } from "react";
+import EditItemModal from "./components/EditItemModal/EditItemModal";
 
 function App() {
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+  const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
   const netflix: Item = {
     id: crypto.randomUUID(),
     name: "Netflix",
@@ -120,6 +122,7 @@ function App() {
         </div>
         <ItemsSection
           setIsAddItemModalOpen={setIsAddItemModalOpen}
+          setIsEditItemModalOpen={setIsEditItemModalOpen}
           items={items}
           setItems={setItems}
         />
@@ -128,6 +131,14 @@ function App() {
         isOpen={isAddItemModalOpen}
         onClose={() => {
           setIsAddItemModalOpen(false);
+        }}
+        setItems={setItems}
+      />
+      <EditItemModal
+        selectedItem={undefined}
+        isOpen={isEditItemModalOpen}
+        onClose={() => {
+          setIsEditItemModalOpen(false);
         }}
         setItems={setItems}
       />
