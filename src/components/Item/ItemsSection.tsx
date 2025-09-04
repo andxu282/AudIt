@@ -8,6 +8,7 @@ type ItemsSectionProps = {
   setIsEditItemModalOpen: Dispatch<SetStateAction<boolean>>;
   items: Item[];
   setItems: Dispatch<SetStateAction<Item[]>>;
+  setSelectedItem: Dispatch<SetStateAction<Item | undefined>>;
 };
 
 function ItemsSection({
@@ -15,6 +16,7 @@ function ItemsSection({
   setIsEditItemModalOpen,
   items,
   setItems,
+  setSelectedItem,
 }: ItemsSectionProps) {
   return (
     <div>
@@ -32,6 +34,7 @@ function ItemsSection({
           item={item}
           setItems={setItems}
           setIsEditItemModalOpen={setIsEditItemModalOpen}
+          setSelectedItem={setSelectedItem}
         />
       ))}
     </div>

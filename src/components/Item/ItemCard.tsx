@@ -10,14 +10,21 @@ type ItemProps = {
   item: Item;
   setItems: Dispatch<SetStateAction<Item[]>>;
   setIsEditItemModalOpen: Dispatch<SetStateAction<boolean>>;
+  setSelectedItem: Dispatch<SetStateAction<Item | undefined>>;
 };
 
-function ItemCard({ item, setItems, setIsEditItemModalOpen }: ItemProps) {
+function ItemCard({
+  item,
+  setItems,
+  setIsEditItemModalOpen,
+  setSelectedItem,
+}: ItemProps) {
   const handleDeleteItem = () => {
     setItems((prevItems) => prevItems.filter((i) => i.id != item.id));
   };
 
   const handleEditItem = () => {
+    setSelectedItem(item);
     setIsEditItemModalOpen(true);
   };
 

@@ -12,6 +12,9 @@ import EditItemModal from "./components/EditItemModal/EditItemModal";
 function App() {
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
+  const [selectedEditItem, setSelectedEditItem] = useState<Item | undefined>(
+    undefined
+  );
   const netflix: Item = {
     id: crypto.randomUUID(),
     name: "Netflix",
@@ -125,6 +128,7 @@ function App() {
           setIsEditItemModalOpen={setIsEditItemModalOpen}
           items={items}
           setItems={setItems}
+          setSelectedItem={setSelectedEditItem}
         />
       </div>
       <AddItemModal
@@ -135,7 +139,7 @@ function App() {
         setItems={setItems}
       />
       <EditItemModal
-        selectedItem={undefined}
+        selectedItem={selectedEditItem}
         isOpen={isEditItemModalOpen}
         onClose={() => {
           setIsEditItemModalOpen(false);
