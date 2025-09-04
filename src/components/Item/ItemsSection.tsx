@@ -6,9 +6,14 @@ import { Dispatch, SetStateAction } from "react";
 type ItemsSectionProps = {
   setIsAddItemModalOpen: Dispatch<SetStateAction<boolean>>;
   items: Item[];
+  setItems: Dispatch<SetStateAction<Item[]>>;
 };
 
-function ItemsSection({ setIsAddItemModalOpen, items }: ItemsSectionProps) {
+function ItemsSection({
+  setIsAddItemModalOpen,
+  items,
+  setItems,
+}: ItemsSectionProps) {
   return (
     <div>
       <div className="items-bar">
@@ -21,7 +26,7 @@ function ItemsSection({ setIsAddItemModalOpen, items }: ItemsSectionProps) {
         </button>
       </div>
       {items.map((item) => (
-        <ItemCard item={item} />
+        <ItemCard item={item} setItems={setItems} />
       ))}
     </div>
   );

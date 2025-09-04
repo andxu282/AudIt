@@ -10,6 +10,7 @@ export enum ItemType {
 }
 
 export type Item = {
+  id: string;
   name: string;
   amount: number;
   // how frequently this is bought, in months

@@ -4,12 +4,18 @@ import {
   formatMoney,
 } from "../../utils";
 import { Item } from "../../types";
+import { Dispatch, SetStateAction } from "react";
 
 type ItemProps = {
   item: Item;
+  setItems: Dispatch<SetStateAction<Item[]>>;
 };
 
-function ItemCard({ item }: ItemProps) {
+function ItemCard({ item, setItems }: ItemProps) {
+  const handleDeleteItem = () => {
+    setItems((prevItems) => prevItems.filter((i) => i.id != item.id));
+  };
+
   return (
     <div className="item-card">
       <div className="item-info">
@@ -30,8 +36,10 @@ function ItemCard({ item }: ItemProps) {
         </p>
       </div>
       <div className="item-buttons">
-        <button>Edit</button>
-        <button>Delete</button>
+        <button className="edit-button">Edit</button>
+        <button className="delete-button" onClick={handleDeleteItem}>
+          Delete
+        </button>
       </div>
     </div>
   );

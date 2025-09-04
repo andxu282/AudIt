@@ -11,6 +11,7 @@ import { useState } from "react";
 function App() {
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const netflix: Item = {
+    id: crypto.randomUUID(),
     name: "Netflix",
     amount: 7.99,
     frequency: 1,
@@ -18,6 +19,7 @@ function App() {
     category: ItemCategory.MONTHLY,
   };
   const shampoo: Item = {
+    id: crypto.randomUUID(),
     name: "Shampoo",
     amount: 14.99,
     frequency: 3,
@@ -25,6 +27,7 @@ function App() {
     category: ItemCategory.DAILY_NEEDS,
   };
   const chase: Item = {
+    id: crypto.randomUUID(),
     name: "Chase Sapphire Preferred",
     amount: 99.99,
     frequency: 12,
@@ -118,6 +121,7 @@ function App() {
         <ItemsSection
           setIsAddItemModalOpen={setIsAddItemModalOpen}
           items={items}
+          setItems={setItems}
         />
       </div>
       <AddItemModal

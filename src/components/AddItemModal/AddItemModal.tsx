@@ -20,6 +20,7 @@ function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
 
   const handleAddItem = () => {
     const newItem: Item = {
+      id: crypto.randomUUID(),
       name: name,
       amount: amount,
       type: type as ItemType,

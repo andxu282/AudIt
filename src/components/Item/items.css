@@ -15,6 +15,10 @@
   border: 0px;
 }
 
+.add-item-button:hover {
+  background-color: rgb(83, 83, 83);
+}
+
 .items-bar {
   display: flex;
   flex-direction: row;
@@ -63,4 +67,13 @@
 
 .item-amount {
   color: gray;
+}
+
+.edit-button {
+  margin-right: 8px;
+}
+
+.delete-button {
+  color: rgb(183, 33, 33);
+  border: 1px solid rgb(183, 33, 33);
 }
