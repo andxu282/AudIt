@@ -9,7 +9,8 @@ flask-sqlalchemy = "*"
 flask-cors = "*"
 psycopg2-binary = "*"
 dotenv = "*"
-sqlmodel = "*"
+datamodel-code-generator = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 

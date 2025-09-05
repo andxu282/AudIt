@@ -1,26 +1,32 @@
-from audit_types import ItemType, ItemCategory
-from sqlmodel import SQLModel, Field, Relationship
+from sqlalchemy import Column, String, Double, DateTime, Enum, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from models.base import Base
 from datetime import datetime, timezone
-from typing import Optional
+from audit_types import ItemType, ItemCategory
 
-class ItemBase(SQLModel):
-    name: str
-    price: float
-    type: ItemType
-    category: ItemCategory
-    frequency: int
 
-class Item(ItemBase, table=True):
+class Item(Base):
     __tablename__ = 'items'
 
-    id: str = Field(primary_key=True)
-    created_at: datetime = Field(default_factory=datetime.now(timezone.utc))
-    user_id: str = Field(foreign_key='users.id')
-    user: Optional["User"] = Relationship(back_populates="items")
+    id = Column(String(36), primary_key=True)
+    name = Column(String(32), nullable=False)
+    price = Column(Double, nullable=False)
+    type = Column(Enum(ItemType), nullable=False)
+    category = Column(Enum(ItemCategory), nullable=False)
+    frequency = Column(Integer, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.now(timezone.utc))
 
-class ItemCreate(ItemBase):
-    pass
+    user_id = Column(String(36), ForeignKey('users.id'), nullable=False)
+    user = relationship('User', back_populates='items')
 
-class ItemResponse(ItemBase):
-    id: str
-    created_at: datetime
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'amount': self.amount,
+            'category': self.category.value,
+            'type': self.type.value,
+            'frequency': self.frequency,
+            'date': self.date.isoformat(),
+            'user_id': self.user_id
+        }

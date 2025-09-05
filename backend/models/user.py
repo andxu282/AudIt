@@ -1,23 +1,27 @@
-from sqlmodel import SQLModel, Field, Relationship
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
-from typing import List
+from models.base import Base
 
-class UserBase(SQLModel):
-    email: str = Field(unique=True)
-    name: str
 
-class User(UserBase, table=True):
+class User(Base):
     __tablename__ = 'users'
 
-    id: str = Field(primary_key=True)
-    password_hash: str
-    created_at: datetime = Field(default_factory=datetime.now(timezone.utc))
+    id = Column(String(36), primary_key=True)
+    email = Column(String(255), unique=True, nullable=False)
+    name = Column(String(100), nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    
+    items = relationship("Item", back_populates="user", cascade="all, delete-orphan")
 
-    items: List["Item"] = Relationship(back_populates="user", cascade_delete=True)
-
-class UserCreate(UserBase):
-    password: str
-
-class UserResponse(UserBase):
-    id: str
-    created_at: datetime
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'name': self.name,
+            'created_at': self.created_at.isoformat()
+        }
+    
+    def __repr__(self):
+        return f'Name: {self.name}, Email: {self.email}'
