@@ -1,0 +1,9 @@
+.welcome {
+  margin-bottom: 24px;
+}
+
+.dashboard-title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
