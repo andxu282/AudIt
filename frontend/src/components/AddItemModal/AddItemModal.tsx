@@ -1,12 +1,13 @@
 import "./additemmodal.css";
-import { ItemCategory, ItemType, Item } from "../../types";
+import { ItemCategory, ItemType, ItemSchema } from "../../generated";
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
+import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
 
 type AddItemModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  setItems: Dispatch<SetStateAction<Item[]>>;
+  setItems: Dispatch<SetStateAction<ItemSchema[]>>;
 };
 
 function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
@@ -19,7 +20,7 @@ function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
   if (!isOpen) return null;
 
   const handleAddItem = () => {
-    const newItem: Item = {
+    const newItem: ItemSchema = {
       id: crypto.randomUUID(),
       name: name,
       amount: amount,
@@ -69,7 +70,7 @@ function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
           onChange={(e) => setType(e.target.value)}
         >
           <option value="">Choose a type</option>
-          {Object.values(ItemType).map((type) => (
+          {Object.values(ItemTypeEnum).map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -82,7 +83,7 @@ function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Choose a category</option>
-          {Object.values(ItemCategory).map((category) => (
+          {Object.values(ItemCategoryEnum).map((category) => (
             <option key={category} value={category}>
               {category}
             </option>

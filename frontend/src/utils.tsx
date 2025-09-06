@@ -1,4 +1,13 @@
-import { ItemCategory, ItemType } from "./types";
+export enum ItemCategoryEnum {
+  DAILY_NEEDS = "Daily Needs",
+  MONTHLY = "Monthly",
+  YEARLY = "Yearly",
+}
+
+export enum ItemTypeEnum {
+  SUBSCRIPTION = "Subscription",
+  ITEM = "Item",
+}
 
 export function formatMoney(amount: number): string {
   return `$${amount.toFixed(2)}`;
@@ -11,42 +20,46 @@ const MONTHLY_TEXT_COLOR = "#257d2a";
 const YEARLY_COLOR = "#d9edff";
 const YEARLY_TEXT_COLOR = "#137ba8";
 
-export function getCategoryTagBackgroundColor(category: ItemCategory): string {
+export function getCategoryTagBackgroundColor(
+  category: ItemCategoryEnum
+): string {
   switch (category) {
-    case ItemCategory.DAILY_NEEDS:
+    case ItemCategoryEnum.DAILY_NEEDS:
       return DAILY_NEEDS_COLOR;
-    case ItemCategory.MONTHLY:
+    case ItemCategoryEnum.MONTHLY:
       return MONTHLY_COLOR;
-    case ItemCategory.YEARLY:
+    case ItemCategoryEnum.YEARLY:
       return YEARLY_COLOR;
+    default:
+      return DAILY_NEEDS_COLOR;
   }
 }
 
-export function getCategoryTagTextColor(category: ItemCategory): string {
+export function getCategoryTagTextColor(category: ItemCategoryEnum): string {
   switch (category) {
-    case ItemCategory.DAILY_NEEDS:
+    case ItemCategoryEnum.DAILY_NEEDS:
       return DAILY_NEEDS_TEXT_COLOR;
-    case ItemCategory.MONTHLY:
+    case ItemCategoryEnum.MONTHLY:
       return MONTHLY_TEXT_COLOR;
-    case ItemCategory.YEARLY:
+    case ItemCategoryEnum.YEARLY:
       return YEARLY_TEXT_COLOR;
   }
 }
 
-export function getTypeTagBackgroundColor(type: ItemType): string {
+export function getTypeTagBackgroundColor(type: ItemTypeEnum): string {
   switch (type) {
-    case ItemType.SUBSCRIPTION:
+    case ItemTypeEnum.SUBSCRIPTION:
       return "";
-    case ItemType.ITEM:
+    case ItemTypeEnum.ITEM:
       return "";
   }
 }
 
-export function getTypeTagTextColor(type: ItemType): string {
+export function getTypeTagTextColor(type: ItemTypeEnum): string {
   switch (type) {
-    case ItemType.SUBSCRIPTION:
+    case ItemTypeEnum.SUBSCRIPTION:
       return "";
-    case ItemType.ITEM:
+    case ItemTypeEnum.ITEM:
       return "";
   }
 }

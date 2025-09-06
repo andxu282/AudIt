@@ -11,6 +11,8 @@ psycopg2-binary = "*"
 dotenv = "*"
 datamodel-code-generator = "*"
 sqlalchemy = "*"
+pydantic = "*"
+pydantic-to-typescript = "*"
 
 [dev-packages]
 

@@ -1,13 +1,14 @@
 import "./edititemmodal.css";
-import { ItemCategory, ItemType, Item } from "../../types";
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
+import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
+import { ItemSchema } from "../../generated";
 
 type EditItemModalProps = {
-  selectedItem?: Item;
+  selectedItem?: ItemSchema;
   isOpen: boolean;
   onClose: () => void;
-  setItems: Dispatch<SetStateAction<Item[]>>;
+  setItems: Dispatch<SetStateAction<ItemSchema[]>>;
 };
 
 function EditItemModal({
@@ -26,12 +27,12 @@ function EditItemModal({
   const [frequency, setFrequency] = useState(selectedItem.frequency);
 
   const handleEditItem = () => {
-    const updatedItem: Item = {
+    const updatedItem: ItemSchema = {
       id: selectedItem.id,
       name: name,
       amount: amount,
-      type: type as ItemType,
-      category: category as ItemCategory,
+      type: type as ItemTypeEnum,
+      category: category as ItemCategoryEnum,
       frequency: frequency,
     };
 
@@ -73,7 +74,7 @@ function EditItemModal({
           onChange={(e) => setType(e.target.value)}
         >
           <option value="">Choose a type</option>
-          {Object.values(ItemType).map((type) => (
+          {Object.values(ItemTypeEnum).map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -86,7 +87,7 @@ function EditItemModal({
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Choose a category</option>
-          {Object.values(ItemCategory).map((category) => (
+          {Object.values(ItemCategoryEnum).map((category) => (
             <option key={category} value={category}>
               {category}
             </option>

@@ -1,16 +1,17 @@
+import { ItemSchema } from "../../generated";
 import {
   getCategoryTagBackgroundColor,
   getCategoryTagTextColor,
   formatMoney,
+  ItemCategoryEnum,
 } from "../../utils";
-import { Item } from "../../types";
 import { Dispatch, SetStateAction } from "react";
 
 type ItemProps = {
-  item: Item;
-  setItems: Dispatch<SetStateAction<Item[]>>;
+  item: ItemSchema;
+  setItems: Dispatch<SetStateAction<ItemSchema[]>>;
   setIsEditItemModalOpen: Dispatch<SetStateAction<boolean>>;
-  setSelectedItem: Dispatch<SetStateAction<Item | undefined>>;
+  setSelectedItem: Dispatch<SetStateAction<ItemSchema | undefined>>;
 };
 
 function ItemCard({
@@ -36,8 +37,10 @@ function ItemCard({
           <div
             className="item-tag"
             style={{
-              color: getCategoryTagTextColor(item.category),
-              backgroundColor: getCategoryTagBackgroundColor(item.category),
+              color: getCategoryTagTextColor(item.category as ItemCategoryEnum),
+              backgroundColor: getCategoryTagBackgroundColor(
+                item.category as ItemCategoryEnum
+              ),
             }}
           >
             {item.category}

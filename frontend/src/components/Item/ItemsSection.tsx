@@ -1,14 +1,14 @@
 import "./items.css";
 import ItemCard from "./ItemCard";
-import { Item } from "../../types";
 import { Dispatch, SetStateAction } from "react";
+import { ItemSchema } from "../../generated";
 
 type ItemsSectionProps = {
   setIsAddItemModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditItemModalOpen: Dispatch<SetStateAction<boolean>>;
-  items: Item[];
-  setItems: Dispatch<SetStateAction<Item[]>>;
-  setSelectedItem: Dispatch<SetStateAction<Item | undefined>>;
+  items: ItemSchema[];
+  setItems: Dispatch<SetStateAction<ItemSchema[]>>;
+  setSelectedItem: Dispatch<SetStateAction<ItemSchema | undefined>>;
 };
 
 function ItemsSection({

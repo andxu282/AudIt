@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Double, DateTime, Enum, Integer, ForeignK
 from sqlalchemy.orm import relationship
 from models.base import Base
 from datetime import datetime, timezone
-from audit_types import ItemType, ItemCategory
+from schemas import ItemType, ItemCategory
 
 
 class Item(Base):
