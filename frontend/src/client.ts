@@ -23,7 +23,7 @@ export interface UpdateItemRequest {
   amount?: number;
   type?: string;
   category?: string;
-  frequency?: string;
+  frequency?: number;
 }
 
 const API_BASE_URL = "http://localhost:5173/api";

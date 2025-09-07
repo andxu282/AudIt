@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
 import { ItemSchema } from "../../generated";
+import { itemsApi } from "../../client";
 
 type EditItemModalProps = {
   selectedItem?: ItemSchema;
@@ -36,6 +37,13 @@ function EditItemModal({
       frequency: frequency,
     };
 
+    itemsApi.updateItem(selectedItem.id, {
+      name: name,
+      amount: amount,
+      type: type,
+      category: category,
+      frequency: frequency,
+    });
     setItems((prevItems) =>
       prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
     );

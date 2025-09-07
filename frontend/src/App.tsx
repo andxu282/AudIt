@@ -5,42 +5,46 @@ import MonthlySpendCard from "./components/MonthlySpendCard/MontlySpendCard";
 import SpendBreakdownCard from "./components/SpendBreakdownCard/SpendBreakdownCard";
 import ItemsSection from "./components/Item/ItemsSection";
 import AddItemModal from "./components/AddItemModal/AddItemModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditItemModal from "./components/EditItemModal/EditItemModal";
 import { ItemCategoryEnum, ItemTypeEnum } from "./utils";
 import { ItemSchema } from "./generated";
+import { itemsApi } from "./client";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
   const [selectedEditItem, setSelectedEditItem] = useState<
     ItemSchema | undefined
   >(undefined);
-  const netflix: ItemSchema = {
-    id: crypto.randomUUID(),
-    name: "Netflix",
-    amount: 7.99,
-    frequency: 1,
-    type: ItemTypeEnum.SUBSCRIPTION,
-    category: ItemCategoryEnum.MONTHLY,
-  };
-  const shampoo: ItemSchema = {
-    id: crypto.randomUUID(),
-    name: "Shampoo",
-    amount: 14.99,
-    frequency: 3,
-    type: ItemTypeEnum.ITEM,
-    category: ItemCategoryEnum.DAILY_NEEDS,
-  };
-  const chase: ItemSchema = {
-    id: crypto.randomUUID(),
-    name: "Chase Sapphire Preferred",
-    amount: 99.99,
-    frequency: 12,
-    type: ItemTypeEnum.SUBSCRIPTION,
-    category: ItemCategoryEnum.YEARLY,
-  };
-  const [items, setItems] = useState<ItemSchema[]>([netflix, shampoo, chase]);
+  const [items, setItems] = useState<ItemSchema[]>([]);
+
+  useEffect(() => {
+    const loadItems = async () => {
+      try {
+        setIsLoading(true);
+        const fetchedItems = await itemsApi.getItems("andxu282");
+        const processedItems = fetchedItems.map((apiItem) => {
+          return {
+            id: apiItem.id,
+            name: apiItem.name,
+            amount: apiItem.amount,
+            type: apiItem.type as ItemTypeEnum,
+            category: apiItem.category as ItemCategoryEnum,
+            frequency: apiItem.frequency,
+          };
+        });
+        setItems(processedItems);
+        setError(null);
+      } catch (err) {
+        setError("Failed to load items");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  });
 
   // Computations
   const totalAmount = items.reduce(

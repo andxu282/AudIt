@@ -3,6 +3,7 @@ import { ItemCategory, ItemType, ItemSchema } from "../../generated";
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
+import { itemsApi } from "../../client";
 
 type AddItemModalProps = {
   isOpen: boolean;
@@ -28,7 +29,14 @@ function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
       category: category as ItemCategory,
       frequency: frequency,
     };
-
+    itemsApi.createItem({
+      name: name,
+      amount: amount,
+      type: type,
+      category: category,
+      frequency: frequency,
+      user_id: "andxu282",
+    });
     setItems((prevItems) => [...prevItems, newItem]);
     setName("");
     setAmount(0);
