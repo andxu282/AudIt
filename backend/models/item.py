@@ -1,5 +1,4 @@
-from sqlalchemy import Column, String, Double, DateTime, Enum, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, Double, DateTime, Enum, Integer
 from models.base import Base
 from datetime import datetime, timezone
 from schemas import ItemType, ItemCategory
@@ -10,14 +9,12 @@ class Item(Base):
 
     id = Column(String(36), primary_key=True)
     name = Column(String(32), nullable=False)
-    price = Column(Double, nullable=False)
+    amount = Column(Double, nullable=False)
     type = Column(Enum(ItemType), nullable=False)
     category = Column(Enum(ItemCategory), nullable=False)
     frequency = Column(Integer, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.now(timezone.utc))
-
-    user_id = Column(String(36), ForeignKey('users.id'), nullable=False)
-    user = relationship('User', back_populates='items')
+    updated_at = Column(DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def to_dict(self):
         return {
@@ -27,6 +24,9 @@ class Item(Base):
             'category': self.category.value,
             'type': self.type.value,
             'frequency': self.frequency,
-            'date': self.date.isoformat(),
-            'user_id': self.user_id
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat()
         }
+    
+    def __repr__(self):
+        return f'name: {self.name}, amount: {self.amount}'
