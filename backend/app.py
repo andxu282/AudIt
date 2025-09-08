@@ -24,6 +24,7 @@ def get_items():
         statement = select(Item)
         items = session.execute(statement).scalars().all()
         items_data = [ItemSchema.model_validate(item).model_dump() for item in items]
+
         return jsonify(items_data)
 
 @app.route('/api/items', methods=['POST'])
@@ -48,6 +49,7 @@ def create_item():
                 created_at = datetime.now(timezone.utc),
                 updated_at = datetime.now(timezone.utc)
             )
+
             session.add(new_item)
             session.commit()
             session.refresh(new_item)

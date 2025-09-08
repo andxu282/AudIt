@@ -9,8 +9,10 @@ import { useState, useEffect } from "react";
 import EditItemModal from "./components/EditItemModal/EditItemModal";
 import { ItemCategoryEnum, ItemTypeEnum } from "./utils";
 import { ItemSchema } from "./generated";
+import { itemsApi } from "./client";
 
 function App() {
+
   const [isLoading, setIsLoading] = useState(true);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
@@ -31,7 +33,6 @@ function App() {
         setIsLoading(false);
       }
     };
-
     loadItems();
   }, []);
 

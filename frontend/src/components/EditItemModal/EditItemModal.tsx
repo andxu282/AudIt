@@ -5,6 +5,7 @@ import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
 import { ItemEdit, ItemSchema } from "../../generated";
 import { itemsApi } from "../../api";
 
+
 type EditItemModalProps = {
   selectedItem?: ItemSchema;
   isOpen: boolean;
@@ -37,7 +38,6 @@ function EditItemModal({
     };
 
     const editedItem = await itemsApi.editItem(selectedItem.id, updatedItem);
-
     setItems((prevItems) =>
       prevItems.map((item) => (item.id === editedItem.id ? editedItem : item))
     );
