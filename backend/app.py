@@ -79,18 +79,16 @@ def edit_item(item_id: str):
             if not item:
                 return jsonify({'error': 'Item not found'}), 404
             data = ItemEdit.model_validate(request.get_json())
-
             if data.name is not None:
                 item.name = data.name
             if data.amount is not None:
-                item.mount = data.amount
+                item.amount = data.amount
             if data.type is not None:
                 item.type = data.type
             if data.category is not None:
                 item.category = data.category
             if data.frequency is not None:
                 item.frequency = data.frequency
-            
             item.updated_at = datetime.now(timezone.utc)
 
             session.commit()

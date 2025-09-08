@@ -1,4 +1,4 @@
-import { ItemCreate, ItemSchema } from "./generated";
+import { ItemCreate, ItemEdit, ItemSchema } from "./generated";
 
 const API_BASE_URL = "http://127.0.0.1:5000/api";
 
@@ -45,5 +45,17 @@ export const itemsApi = {
         errorData.error || `HTTP ${response.status}: ${response.statusText}`
       );
     }
+  },
+
+  async editItem(itemId: string, itemEdit: ItemEdit): Promise<ItemSchema> {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(itemEdit),
+    });
+
+    return handleResponse<ItemSchema>(response);
   },
 };

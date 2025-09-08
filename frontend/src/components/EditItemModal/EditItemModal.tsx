@@ -2,7 +2,8 @@ import "./edititemmodal.css";
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
-import { ItemSchema } from "../../generated";
+import { ItemEdit, ItemSchema } from "../../generated";
+import { itemsApi } from "../../api";
 
 type EditItemModalProps = {
   selectedItem?: ItemSchema;
@@ -26,9 +27,8 @@ function EditItemModal({
   const [category, setCategory] = useState<string>(selectedItem.category);
   const [frequency, setFrequency] = useState(selectedItem.frequency);
 
-  const handleEditItem = () => {
-    const updatedItem: ItemSchema = {
-      id: selectedItem.id,
+  const handleEditItem = async () => {
+    const updatedItem: ItemEdit = {
       name: name,
       amount: amount,
       type: type as ItemTypeEnum,
@@ -36,8 +36,10 @@ function EditItemModal({
       frequency: frequency,
     };
 
+    const editedItem = await itemsApi.editItem(selectedItem.id, updatedItem);
+
     setItems((prevItems) =>
-      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+      prevItems.map((item) => (item.id === editedItem.id ? editedItem : item))
     );
     onClose();
   };
