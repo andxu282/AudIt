@@ -1,3 +1,4 @@
+import { itemsApi } from "../../api";
 import { ItemSchema } from "../../generated";
 import {
   getCategoryTagBackgroundColor,
@@ -21,7 +22,11 @@ function ItemCard({
   setSelectedItem,
 }: ItemProps) {
   const handleDeleteItem = () => {
-    setItems((prevItems) => prevItems.filter((i) => i.id != item.id));
+    const deletedItemId = item.id;
+    setItems((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedItemId)
+    );
+    itemsApi.deleteItem(item.id);
   };
 
   const handleEditItem = () => {

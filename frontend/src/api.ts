@@ -31,4 +31,19 @@ export const itemsApi = {
     });
     return handleResponse<ItemSchema>(response);
   },
+
+  async deleteItem(itemId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/items/${itemId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: "Unknown error" }));
+      throw new Error(
+        errorData.error || `HTTP ${response.status}: ${response.statusText}`
+      );
+    }
+  },
 };

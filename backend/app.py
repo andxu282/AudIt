@@ -56,3 +56,17 @@ def create_item():
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/items/<item_id>', methods=['DELETE'])
+def delete_item(item_id: str):
+    try:
+        with Session(engine) as session:
+            item = session.get(Item, item_id)
+            if not item:
+                return jsonify({'error': 'Item not found'}), 404
+            session.delete(item)
+            session.commit()
+
+            return jsonify({'message': 'Item successfully deleted.'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
