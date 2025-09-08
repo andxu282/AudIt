@@ -8,16 +8,34 @@
 export type ItemType = "Subscription" | "Item";
 export type ItemCategory = "Daily Needs" | "Monthly" | "Yearly";
 
-export interface ItemSchema {
-  id: string;
+export interface ItemBase {
   name: string;
   amount: number;
   type: ItemType;
   category: ItemCategory;
   frequency: number;
 }
-export interface UserSchema {
-  id: string;
+export interface ItemCreate {
   name: string;
-  email: string;
+  amount: number;
+  type: ItemType;
+  category: ItemCategory;
+  frequency: number;
+}
+export interface ItemEdit {
+  name?: string | null;
+  amount?: number | null;
+  type?: ItemType | null;
+  category?: ItemCategory | null;
+  frequency?: number | null;
+}
+export interface ItemSchema {
+  name: string;
+  amount: number;
+  type: ItemType;
+  category: ItemCategory;
+  frequency: number;
+  id: string;
+  created_at: string;
+  updated_at: string;
 }

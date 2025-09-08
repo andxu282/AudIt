@@ -12,8 +12,8 @@ import { ItemSchema } from "./generated";
 import { itemsApi } from "./client";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
   const [selectedEditItem, setSelectedEditItem] = useState<
@@ -24,27 +24,17 @@ function App() {
   useEffect(() => {
     const loadItems = async () => {
       try {
-        setIsLoading(true);
-        const fetchedItems = await itemsApi.getItems("andxu282");
-        const processedItems = fetchedItems.map((apiItem) => {
-          return {
-            id: apiItem.id,
-            name: apiItem.name,
-            amount: apiItem.amount,
-            type: apiItem.type as ItemTypeEnum,
-            category: apiItem.category as ItemCategoryEnum,
-            frequency: apiItem.frequency,
-          };
-        });
-        setItems(processedItems);
-        setError(null);
-      } catch (err) {
-        setError("Failed to load items");
+        const response = await fetch("http://127.0.0.1:5000/api/items");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error loading items: ", error);
       } finally {
         setIsLoading(false);
       }
     };
-  });
+    loadItems();
+  }, []);
 
   // Computations
   const totalAmount = items.reduce(

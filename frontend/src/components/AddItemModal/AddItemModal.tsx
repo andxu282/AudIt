@@ -1,9 +1,14 @@
 import "./additemmodal.css";
-import { ItemCategory, ItemType, ItemSchema } from "../../generated";
+import {
+  ItemSchema,
+  ItemCreate,
+  ItemType,
+  ItemCategory,
+} from "../../generated";
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ItemCategoryEnum, ItemTypeEnum } from "../../utils";
-import { itemsApi } from "../../client";
+import { itemsApi } from "../../api";
 
 type AddItemModalProps = {
   isOpen: boolean;
@@ -12,6 +17,7 @@ type AddItemModalProps = {
 };
 
 function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
   const [type, setType] = useState("");
@@ -20,30 +26,29 @@ function AddItemModal({ isOpen, onClose, setItems }: AddItemModalProps) {
 
   if (!isOpen) return null;
 
-  const handleAddItem = () => {
-    const newItem: ItemSchema = {
-      id: crypto.randomUUID(),
-      name: name,
-      amount: amount,
-      type: type as ItemType,
-      category: category as ItemCategory,
-      frequency: frequency,
-    };
-    itemsApi.createItem({
-      name: name,
-      amount: amount,
-      type: type,
-      category: category,
-      frequency: frequency,
-      user_id: "andxu282",
-    });
-    setItems((prevItems) => [...prevItems, newItem]);
-    setName("");
-    setAmount(0);
-    setType("");
-    setCategory("");
-    setFrequency(0);
-    onClose();
+  const handleAddItem = async () => {
+    try {
+      setIsLoading(true);
+      const item: ItemCreate = {
+        name: name,
+        amount: amount,
+        type: type as ItemType,
+        category: category as ItemCategory,
+        frequency: frequency,
+      };
+      const newItem = await itemsApi.createItem(item);
+      setItems((prevItems) => [...prevItems, newItem]);
+      setName("");
+      setAmount(0);
+      setType("");
+      setCategory("");
+      setFrequency(0);
+      onClose();
+    } catch (err) {
+      console.error("Error adding item");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
