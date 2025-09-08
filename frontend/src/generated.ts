@@ -22,6 +22,13 @@ export interface ItemCreate {
   category: ItemCategory;
   frequency: number;
 }
+export interface ItemEdit {
+  name?: string | null;
+  amount?: number | null;
+  type?: ItemType | null;
+  category?: ItemCategory | null;
+  frequency?: number | null;
+}
 export interface ItemSchema {
   name: string;
   amount: number;
@@ -31,11 +38,4 @@ export interface ItemSchema {
   id: string;
   created_at: string;
   updated_at: string;
-}
-export interface ItemUpdate {
-  name?: string | null;
-  amount?: number | null;
-  type?: ItemType | null;
-  category?: ItemCategory | null;
-  frequency?: number | null;
 }

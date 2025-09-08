@@ -4,7 +4,7 @@ from flask_cors import CORS
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 from models.item import Item
-from schemas import ItemSchema, ItemCreate, ItemType, ItemCategory
+from schemas import ItemEdit, ItemSchema, ItemCreate, ItemType, ItemCategory
 from dotenv import load_dotenv
 import os
 from datetime import datetime, timezone
@@ -68,5 +68,35 @@ def delete_item(item_id: str):
             session.commit()
 
             return jsonify({'message': 'Item successfully deleted.'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/items/<item_id>', methods=['PUT'])
+def edit_item(item_id: str):
+    try:
+        with Session(engine) as session:
+            item = session.get(Item, item_id)
+            if not item:
+                return jsonify({'error': 'Item not found'}), 404
+            data = ItemEdit.model_validate(request.get_json())
+
+            if data.name is not None:
+                item.name = data.name
+            if data.amount is not None:
+                item.mount = data.amount
+            if data.type is not None:
+                item.type = data.type
+            if data.category is not None:
+                item.category = data.category
+            if data.frequency is not None:
+                item.frequency = data.frequency
+            
+            item.updated_at = datetime.now(timezone.utc)
+
+            session.commit()
+            session.refresh(item)
+            return jsonify(ItemSchema.model_validate(item).model_dump())
+    except ValidationError as e:
+        return {'error': e.errors()}, 422
     except Exception as e:
         return jsonify({'error': str(e)}), 500

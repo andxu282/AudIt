@@ -32,7 +32,7 @@ class ItemSchema(ItemBase):
 
     model_config = ConfigDict(from_attributes=True)
 
-class ItemUpdate(ItemBase):
+class ItemEdit(ItemBase):
     name: Optional[str] = None
     amount: Optional[float] = None
     type: Optional[ItemType] = None
